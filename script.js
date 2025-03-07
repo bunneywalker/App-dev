@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     
     if (document.getElementById("coursesBody")) {
-        fetch("https://bunneywalker.github.io/test9000/coursestaken.json")
+        fetch("https://bunneywalker.github.io/App-dev/coursestaken.json")
             .then(response => response.json())
             .then(data => {
                 displayCourses(data.courses);
@@ -9,7 +9,25 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => console.error("Error fetching JSON:", error));
     }
 });
+let header = document.querySelector("header");
+    let r = 0;
+    let increasing = true; 
 
+    function smoothBlackToDarkRed() {
+        if (increasing) {
+            r += 1.5; 
+            if (r >= 150) increasing = false; 
+        } else {
+            r -= 1.5; 
+            if (r <= 0) increasing = true; 
+        }
+
+        header.style.backgroundColor = `rgb(${Math.round(r)}, 0, 0)`; 
+
+        requestAnimationFrame(smoothBlackToDarkRed); 
+    }
+
+    smoothBlackToDarkRed();
 function displayCourses(courses) {
     const tbody = document.getElementById("coursesBody");
     tbody.innerHTML = "";
@@ -30,12 +48,14 @@ function displayCourses(courses) {
 function searchCourses() {
     const searchInput = document.getElementById("searchBar").value.toLowerCase();
 
-    fetch("courses.json")
+    fetch("coursestaken.json")
         .then(response => response.json())
         .then(data => {
             const filteredCourses = data.courses.filter(course =>
                 course.description.toLowerCase().includes(searchInput) ||
                 course.code.toLowerCase().includes(searchInput)
+               
+                
             );
             displayCourses(filteredCourses);
         })
