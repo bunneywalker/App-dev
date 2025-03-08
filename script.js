@@ -21,7 +21,7 @@ let header = document.querySelector("header");
             r -= 1.5; 
             if (r <= 0) increasing = true; 
         }
-
+        
         header.style.backgroundColor = `rgb(${Math.round(r)}, 0, 0)`; 
 
         requestAnimationFrame(smoothBlackToDarkRed); 
@@ -39,8 +39,7 @@ function displayCourses(courses) {
             <td>${course.sem}</td>
             <td>${course.code}</td>
             <td>${course.description}</td>
-            <td>${course.credit}</td>
-        `;
+            <td>${course.credit}</td>`;
         tbody.appendChild(row);
     });
 }
